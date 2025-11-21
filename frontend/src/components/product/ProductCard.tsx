@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react';
 import type { Product } from '../../types/types';
 import Shopping from "../../assets/shopping.png"
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product }: { product: Product }) => {
   
@@ -14,17 +15,22 @@ const ProductCard = ({ product }: { product: Product }) => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleProductClick = (productId: number) => {
+    navigate(`/product/${productId}`);
+  }
+
   return (
     <div className="border border-[#ECECEC] rounded-2xl p-4 relative hover:shadow-lg transition-shadow bg-white group">
       
-      {/* --- Badge --- */}
       {product.badge && (
         <div className={`absolute top-0 left-0 text-white text-xs font-normal leading-3 px-3 py-2 rounded-tl-2xl rounded-br-xl z-10 ${getBadgeStyle(product.badge.color)}`}>
           {product.badge.text}
         </div>
       )}
 
-      <div className="h-60 flex items-center justify-center mb-4 relative overflow-hidden">
+      <div onClick={()=> handleProductClick(product.id)} className="h-60 cursor-pointer flex items-center justify-center mb-4 relative overflow-hidden">
         <img 
           src={product.image} 
           alt={product.title} 
@@ -34,7 +40,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 
       <div className="space-y-1">
         <p className="text-xs text-[#ADADAD] leading-6">{product.category}</p>
-        <h3 className="text-[#2B2B2D] mt-2 font-semibold text-[15px] leading-6 tracking-[0.48px] line-clamp-2">
+        <h3 onClick={()=> handleProductClick(product.id)} className="text-[#2B2B2D] cursor-pointer hover:text-gray-500 mt-2 font-semibold text-[15px] leading-6 tracking-[0.48px] line-clamp-2">
           {product.title}
         </h3>
         
@@ -42,8 +48,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
           <span className="text-xs text-[#B6B6B6]">({product.rating})</span>
         </div>
-
-        {/* Brand */}
+        
         <div className="text-xs mt-2.5">
           <span className="text-gray-400">By </span>
           <span className={`${product.id === 1 ? "text-[#F53E32]" : "text-[#3BB77E]"} font-medium`}>{product.brand}</span>

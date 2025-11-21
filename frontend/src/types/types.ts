@@ -32,3 +32,14 @@ export interface DealProps {
     oldPrice: number;
   }
 }
+
+export interface FooterColumnProps {
+  title: string;
+  links: string[];
+}
+
+export interface NavbarData {
+  name: string;
+  main: string;
+  page: string;
+}

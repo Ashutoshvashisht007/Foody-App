@@ -4,8 +4,6 @@ import Lemon from "../../assets/lemon.png"
 
 const PopularProducts = () => {
   const categories = ['All', 'Milks & Dairies', 'Coffes & Teas', 'Pet Foods', 'Meats', 'Vegetables', 'Fruits'];
-
-  // Dummy data based on your screenshot
   const products: Product[] = [
     {
       id: 1,
@@ -93,7 +91,6 @@ const PopularProducts = () => {
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-8 gap-4">
           <h2 className="text-[32px] leading-[38px] tracking-normal font-bold text-[#253D4E]">Popular Products</h2>
           
-          {/* Categories Navigation */}
           <ul className="flex flex-wrap gap-4 text-sm font-medium">
             {categories.map((cat, index) => (
               <li 

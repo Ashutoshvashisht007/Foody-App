@@ -1,23 +1,14 @@
-import DailyBestSells from '../sections/DailyBestSells'
-import DealsOfTheDay from '../sections/DealsOfTheDay'
-import FeaturesInfo from '../sections/FeaturesInfo'
-import Hero from '../sections/Hero'
-import PopularProducts from '../sections/PopularProducts'
-import PromoBanner from '../sections/PromoBanner'
-import SubscriptionBanner from '../sections/SubscriptionBanner'
+import Footer from './footer/Footer'
 import Header from './header/Header'
 
-const PageLayout = () => {
+const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='w-full min-h-screen overflow-x-hidden'>
-        <Header />
-        <Hero />
-        <PromoBanner />
-        <PopularProducts />
-        <DailyBestSells />
-        <DealsOfTheDay />
-        <SubscriptionBanner />
-        <FeaturesInfo />
+      <Header />
+      <main className="grow">
+        {children}
+      </main>
+      <Footer />
     </div>
   )
 }
