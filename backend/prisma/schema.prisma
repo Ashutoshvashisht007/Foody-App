@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  oldPrice    Decimal? @db.Decimal(10, 2)
+  category    String
+  brand       String
+  image       String   // Path to image asset
+  rating      Float    @default(0)
+  reviewCount Int      @default(0)
+  
+  // UI Specifics
+  badgeText   String?  // e.g., "Hot", "Sale", "-14%"
+  badgeColor  String?  // e.g., "red", "blue", "green"
+  
+  // Tabular Details (from Product Detail page)
+  flavour     String?
+  dietType    String?
+  weight      String?
+  speciality  String?
+  info        String?
+  
+  // Relations
+  tags        Tag[]
+  orderItems  OrderItem[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  products  Product[]
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  status        String      @default("PENDING") // PENDING, COMPLETED, SHIPPED
+  totalAmount   Decimal     @db.Decimal(10, 2)
+  
+  // User Info (Simplified for checkout without full auth if needed)
+  customerEmail String
+  customerName  String
+  address       String
+  
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2) // Price at time of purchase
+}
